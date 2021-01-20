@@ -38,11 +38,21 @@ class Posts {
   }
   
   deletePost(id) { 
-    this.posts.splice(this.posts.findIndex(post => post.id === `${id}`), 1)
+    try {
+      this.posts.splice(this.posts.findIndex(post => post.id === `${id}`), 1)
+    } catch(err) {
+      if (err) throw 'wrong id, cannot delete'
+    }
+    
   }
 
   likePost(id) {
-    this.posts[this.posts.findIndex(post => post.id === `${id}`)].changeLike()
+    try {
+      this.posts[this.posts.findIndex(post => post.id === `${id}`)].changeLike()
+    } catch(err) {
+      if (err) throw 'wrong id, cannot like'
+    }
+   
   }
 }
 
