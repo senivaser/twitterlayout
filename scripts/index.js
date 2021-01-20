@@ -6,7 +6,69 @@ document.addEventListener('DOMContentLoaded', function() {
 })
 
 */
-//Proto calls
+
+//////Twitter
+
+import twitterClasses from './twitterClasses.js'
+
+const {
+  Twitter,
+  FetchData
+} = {...twitterClasses}
+
+///Заполнение твиттера
+const twitter = new Twitter({
+  listElem: '.tweet-list'
+})
+
+twitter.tweets.addPost({
+  id: '23',
+  userName: 'Натали',
+  nickName: 'Nataly',
+  postDate: '01.19.2021',
+  text: 'KAEF',
+  img:'',
+  likes: '50',
+  liked: false
+})
+
+const idarr = [1, 2, 3, 4, 5, 6]
+/*
+idarr.map((id) => {
+  twitter.tweets.addPost({
+    'id': `${id}`,
+    likes: 10
+  })
+})
+*/
+
+/*
+twitter.tweets.addPost ({
+  text: "Hi, there"
+})
+*/
+
+twitter.tweets.deletePost(3)
+
+console.log(twitter)
+
+const fetchObj = new FetchData()
+
+console.log(fetchObj)
+
+fetchObj.getPost().then((data) => {
+  console.log(data)
+}, () => {})
+
+
+
+
+
+
+
+
+
+/*Proto calls
 
 import protoClasses from './protoClasses.js'
 
@@ -53,7 +115,10 @@ console.log(warrior)
 warrior.walk(500)
 warrior.classSkill()
 
-//ES6Class calls
+*/
+
+
+/*ES6Class calls
 
 import ES6Classes from './ES6Classes.js'
 
@@ -73,41 +138,4 @@ const warrior1 = new Class6({
 })
 
 warrior1.classSkill()
-
-//////Twitter
-
-import twitterClasses from './twitterClasses.js'
-
-const {
-  Twitter
-} = {...twitterClasses}
-
-///Заполнение твиттера
-const twitter = new Twitter({
-  listElem: '.tweet-list'
-})
-
-twitter.tweets.addPost({
-  id: '23',
-  userName: 'Натали',
-  nickName: 'Nataly',
-  postData: '01.19.2021',
-  text: 'KAEF',
-  img:'',
-  likes: '50',
-  liked: false
-})
-
-const idarr = [1, 2, 3, 4, 5, 6]
-idarr.map((id) => {
-  twitter.tweets.addPost({
-    'id': `${id}`,
-    likes: 10
-  })
-})
-
-
-twitter.tweets.deletePost(3)
-twitter.tweets.likePost(4)
-twitter.tweets.likePost(7)
-console.log(twitter)
+*/
