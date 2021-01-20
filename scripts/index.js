@@ -74,7 +74,7 @@ const warrior1 = new Class6({
 
 warrior1.classSkill()
 
-//////
+//////Twitter
 
 import twitterClasses from './twitterClasses.js'
 
@@ -82,6 +82,7 @@ const {
   Twitter
 } = {...twitterClasses}
 
+///Заполнение твиттера
 const twitter = new Twitter({
   listElem: '.tweet-list'
 })
@@ -97,4 +98,15 @@ twitter.tweets.addPost({
   liked: false
 })
 
+const idarr = [1, 2, 3, 4, 5, 6]
+idarr.map((id) => {
+  twitter.tweets.addPost({
+    'id': `${id}`,
+    likes: 10
+  })
+})
+
+
+twitter.tweets.deletePost(3)
+twitter.tweets.likePost(4)
 console.log(twitter)

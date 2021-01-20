@@ -37,24 +37,24 @@ class Posts {
     this.posts.push(post) 
   }
   
-  deletePost(id) {
-
+  deletePost(id) { 
+    this.posts.splice(this.posts.findIndex(post => post.id === `${id}`), 1)
   }
 
   likePost(id) {
-
+    this.posts[this.posts.findIndex(post => post.id === `${id}`)].changeLike()
   }
 }
 
 class Post {
   constructor(param) {
     this.id = param.id
-    this.userName = param.userName
-    this.nickName = param.nickName
-    this.postData = param.postData
-    this.text = param.text
-    this.img = param.img
-    this.likes = param.likes
+    this.userName = param.userName && 'empty'
+    this.nickName = param.nickName && 'empty'
+    this.postData = param.postData && new Date()
+    this.text = param.text && 'empty'
+    this.img = param.img && 'none'
+    this.likes = param.likes && 0
     this.liked = false
   }
 
