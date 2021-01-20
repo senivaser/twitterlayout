@@ -52,7 +52,6 @@ class Posts {
     } catch(err) {
       if (err) throw 'wrong id, cannot like'
     }
-   
   }
 }
 
@@ -75,9 +74,7 @@ class Post {
     } else {
       this.likes--
     }
-    
   }
-
 }
 
 export default {

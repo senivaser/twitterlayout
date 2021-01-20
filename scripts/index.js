@@ -109,4 +109,5 @@ idarr.map((id) => {
 
 twitter.tweets.deletePost(3)
 twitter.tweets.likePost(4)
+twitter.tweets.likePost(7)
 console.log(twitter)
