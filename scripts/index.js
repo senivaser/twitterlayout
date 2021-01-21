@@ -18,7 +18,26 @@ const {
 
 ///Заполнение твиттера
 const twitter = new Twitter({
-  listElem: '.tweet-list'
+  listElem: '.tweet-list',
+  user: {
+    name: 'Иван Сенюшкин',
+    nick: 'senivaser'
+  },
+  modalElems: [
+    {
+      button: '.header__link_tweet',
+      modal: '.modal',
+      overlay: '.overlay',
+      close: '.modal-close__btn'
+    }
+  ],
+  tweetElems: [
+    {
+      text: '.modal .tweet-form__text',
+      img: '.modal .tweet-img__btn',
+      submit: '.modal .tweet-form__btn'
+    }
+  ]
 })
 
 twitter.tweets.addPost({

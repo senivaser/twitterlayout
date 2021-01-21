@@ -22,7 +22,7 @@ class FetchData {
 //в себе перечень и фунцкионал постов в собственной ленте 
 class Twitter {
 
-  constructor(param) {
+  constructor({listElem, modalElems, tweetElems, user}) {
 
     //Создается объект для работы с запросами
     const fetchData = new FetchData()
@@ -30,10 +30,13 @@ class Twitter {
     //Характеристика является объектом класса Posts,
     //по сути содержит все посты и методы воздействия на них
     this.tweets = new Posts()
+    this.user = user
 
     //Указание класса тега родителя для вставки поста
     this.elements = {
-      listElem: document.querySelector(param.listElem)
+      listElem: document.querySelector(listElem),
+      modal: modalElems,
+      tweetElems
     }
 
     //Заполнение this.tweets постами из данных запроса
@@ -45,9 +48,10 @@ class Twitter {
         //отображение всех постов на странице, так как вызов 
         //этой функции выполняется в конструкторе
         this.showAllPosts()
-      })
-      
+    })
     
+    this.elements.modal.forEach(this.handlerModal, this)
+    this.elements.tweetElems.forEach(this.addTweet, this)
     //console.log(this.tweets)
   }
 
@@ -132,8 +136,71 @@ class Twitter {
 
   ////////////////
 
-  //Открытие модального окна(?)
-  openModal(){
+  //Открытие модального окна
+  handlerModal({button, modal, overlay, close}){
+
+    const buttonElem = document.querySelector(button)
+    const modalElem = document.querySelector(modal)
+    const overlayElem = document.querySelector(overlay)
+    const closeElem = document.querySelector(close)
+
+    const openModal = (e) => {
+      console.log(e)
+      modalElem.style.display = 'block'
+    }
+
+    const closeModal = (elem, event) => {
+      const target = event.target
+       if (target === elem) modalElem.style.display = 'none'
+    }
+
+    buttonElem.addEventListener('click', openModal)
+
+    if (closeElem) {
+      closeElem.addEventListener('click', closeModal.bind(null, closeElem))
+    }
+    
+    if (overlayElem) {
+      overlayElem.addEventListener('click', closeModal.bind(null, overlayElem))
+    }
+    
+    this.handlerModal.closeModal = () => {
+      modalElem.style.display = 'none'
+    }
+  }
+
+  ///Рендер твита
+  addTweet ({text, img, submit}) {
+
+    const textElem = document.querySelector(text)
+    const imgElem = document.querySelector(img)
+    const submitElem = document.querySelector(submit)
+
+    let imgURL = ''
+    let tempString = textElem.innerHTML
+
+    submitElem.addEventListener('click', () => {
+      this.tweets.addPost({
+        userName: this.user.name,
+        nickname: this.user.nick,
+        text: textElem.innerHTML,
+        img: imgURL
+      })
+      this.showAllPosts()
+      this.handlerModal.closeModal()
+      console.log(this.tweets)
+    })
+
+    textElem.addEventListener('click', ()=> {
+      if (textElem.innerHTML === tempString){
+        textElem.innerHTML = ``
+      }
+      
+    })
+
+    imgElem.addEventListener('click', () => {
+      imgURL = prompt('Введите адрес изображения')
+    })
 
   }
 }
@@ -153,7 +220,7 @@ class Posts {
   //поэтому может передаваться для работы как функция
   // в наследующие классы
   addPost = (post) => {
-    this.posts.push(new Post(post)) 
+    this.posts.unshift(new Post(post)) 
   }
 
   //Удаление поста из списка
@@ -195,7 +262,7 @@ class Post {
     this.id = param.id || this.generateId()                  //id поста
     this.userName = param.userName || 'empty'                //имя пользователя
     this.nickname = param.nickname || 'empty'                //ник пользователя
-    this.postDate = new Date(param.postDate) || new Date()   //дата поста
+    this.postDate = param.postDate || new Date()   //дата поста
     this.text = param.text || 'empty'                        //текст поста
     this.img = param.img || 'none'                           //путь к изображению поста
     this.likes = param.likes || 0                            //лайки поста
